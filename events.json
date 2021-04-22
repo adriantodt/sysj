@@ -1,0 +1,9 @@
+{
+    "events": [
+        {
+            "type": "cron",
+            "cron": "*/5 * * * * *",
+            "url": "http://localhost:8080/hello/"
+        }
+    ]
+}

@@ -1,6 +1,5 @@
 package net.adriantodt.sysj.tasks
 
-import io.micronaut.scheduling.cron.CronExpression
 import mu.KLogging
 import net.adriantodt.sysj.utils.sendAsync
 import java.net.URI
@@ -23,10 +22,10 @@ open class HttpTasks {
 
     private val httpClient: HttpClient = HttpClient.newHttpClient()
 
-    private val tasks = ConcurrentHashMap<String, HttpTask>()
+    val tasks = ConcurrentHashMap<String, HttpTask>()
 
-    fun createCronTask(url: String, cronExpr: CronExpression): String {
-        return registerTask(CronTask(this, url, cronExpr))
+    fun createCronTask(url: String, cron: String): String {
+        return registerTask(CronTask(this, url, cron))
     }
 
     fun createRateTask(url: String, rate: Long, unit: TimeUnit): String {

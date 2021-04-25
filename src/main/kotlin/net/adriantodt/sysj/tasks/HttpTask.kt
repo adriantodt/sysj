@@ -9,7 +9,7 @@ import java.util.concurrent.ScheduledFuture
 import java.util.concurrent.TimeUnit
 
 sealed class HttpTask {
-    abstract val parent: HttpTasks
+    protected abstract val parent: HttpTasks
     abstract val url: String
 
     protected open fun run() {
@@ -22,8 +22,10 @@ sealed class HttpTask {
 data class CronTask(
     override val parent: HttpTasks,
     override val url: String,
-    private val cronExpr: CronExpression
+    val cron: String
 ) : HttpTask() {
+    private val cronExpr = CronExpression.create(cron)
+
     private var lastFuture = scheduleNext()
 
     override fun run() {
@@ -44,8 +46,8 @@ data class CronTask(
 class RateTask(
     override val parent: HttpTasks,
     override val url: String,
-    private val rate: Long,
-    private val unit: TimeUnit
+    val rate: Long,
+    val unit: TimeUnit
 ) : HttpTask() {
     private val future: ScheduledFuture<*> = parent.schedulerService.scheduleAtFixedRate(this::run, 0, rate, unit)
 

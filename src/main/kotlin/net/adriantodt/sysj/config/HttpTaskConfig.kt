@@ -4,16 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class HttpEventConfig(val events: List<HttpSchedulerEvent>)
-
-@Serializable
-enum class Event {
-    @SerialName("start")
-    START
-}
-
-@Serializable
-sealed class HttpSchedulerEvent {
+sealed class HttpTaskConfig {
     abstract val url: String
 
     @Serializable
@@ -21,12 +12,12 @@ sealed class HttpSchedulerEvent {
     data class Cron(
         val cron: String,
         override val url: String
-    ) : HttpSchedulerEvent()
+    ) : HttpTaskConfig()
 
     @Serializable
     @SerialName("rate")
     data class Rate(
         val rate: String,
         override val url: String
-    ) : HttpSchedulerEvent()
+    ) : HttpTaskConfig()
 }

@@ -1,8 +1,8 @@
 plugins {
     kotlin("jvm") version "1.4.30"
     kotlin("kapt") version "1.4.30"
-    kotlin("plugin.serialization") version "1.4.30"
     kotlin("plugin.allopen") version "1.4.30"
+    kotlin("plugin.serialization") version "1.4.30"
     id("com.github.johnrengelman.shadow") version "6.1.0"
     id("io.micronaut.application") version "1.4.2"
 }

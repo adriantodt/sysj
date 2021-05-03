@@ -10,8 +10,18 @@ import net.adriantodt.sysj.params.Params
 @Controller("/params")
 class ParamsController(private val params: Params) {
     @Get
+    fun entries(): HttpResponse<List<Map<String, String>>> {
+        return HttpResponse.ok(params.map.entries.map { (k, v) -> mapOf("key" to k, "value" to v) })
+    }
+
+    @Get("keys")
     fun keys(): HttpResponse<Set<String>> {
         return HttpResponse.ok(params.map.keys)
+    }
+
+    @Get("count")
+    fun count(): HttpResponse<Int> {
+        return HttpResponse.ok(params.map.size)
     }
 
     @Post
